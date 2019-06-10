@@ -1,0 +1,24 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
+  datasource:
+    username: postgres
+    password: senha-do-banco
+    url: "jdbc:postgresql://localhost:5432/central_bank"
+    driver-class-name: org.postgresql.Driver
+  jackson:
+    date-format: "yyyy-MM-dd'T'HH:mm:ssZ"
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+server:
+  port: 8001
