@@ -21,7 +21,7 @@ spring:
       WRITE_DATES_AS_TIMESTAMPS: false
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: "jdbc:postgresql://localhost:5432/empresa01"
+    url: ""
     username: postgres
     password: senha-do-banco
 server:

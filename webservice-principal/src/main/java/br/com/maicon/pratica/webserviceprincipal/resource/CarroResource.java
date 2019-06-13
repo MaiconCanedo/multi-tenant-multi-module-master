@@ -6,10 +6,11 @@ import br.com.maicon.pratica.webserviceprincipal.model.exception.NoContentExcept
 import br.com.maicon.pratica.webserviceprincipal.service.CarroService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.CannotCreateTransactionException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("carro")
@@ -29,5 +30,27 @@ public class CarroResource {
         } catch (CannotCreateTransactionException e) {
             throw new BadRequestExecption("Usuário não cadastrado!");
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Carro>> findAll(@RequestBody Carro carro) {
+        try {
+            List<Carro> carros = carroService.findAll(carro);
+            if (carros.isEmpty())
+                throw new NoContentException("Nenhum carro encontrado!");
+            return ResponseEntity.ok(carros);
+        } catch (CannotCreateTransactionException e) {
+            throw new BadRequestExecption("Usuário não cadastrado!");
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> save(@RequestBody Carro carro) {
+        Carro carroSave = carroService.save(carro);
+        if (carroSave == null)
+            throw new BadRequestExecption("carro não salvo");
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
+                .buildAndExpand(carroSave.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
