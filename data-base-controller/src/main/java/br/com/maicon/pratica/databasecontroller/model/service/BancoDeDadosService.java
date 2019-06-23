@@ -27,4 +27,8 @@ public class BancoDeDadosService {
     public List<BancoDeDados> findAll() {
         return bancoDeDadosReporitory.findAll();
     }
+
+    public Optional<BancoDeDados> findAny() {
+        return bancoDeDadosReporitory.findAll().stream().findAny();
+    }
 }

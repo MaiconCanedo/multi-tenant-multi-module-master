@@ -23,11 +23,19 @@ public class BancoDeDadosResource {
         this.bancoDeDadosService = bancoDeDadosService;
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "{id}")
     public ResponseEntity<BancoDeDadosDTO> findById(@PathVariable("id") String id) {
         BancoDeDadosDTO bancoDeDadosDTO = bancoDeDadosService.findById(id)
                 .map(BancoDeDadosDTO::new)
                 .orElseThrow(() -> new NoContentException("Usuário não cadastrado."));
+        return ResponseEntity.ok(bancoDeDadosDTO);
+    }
+
+    @GetMapping("qualquer")
+    public ResponseEntity<BancoDeDadosDTO> finAny() {
+        BancoDeDadosDTO bancoDeDadosDTO = bancoDeDadosService.findAny()
+                .map(BancoDeDadosDTO::new)
+                .orElseThrow(() -> new NoContentException("Nenhum usuário cadastrado"));
         return ResponseEntity.ok(bancoDeDadosDTO);
     }
 

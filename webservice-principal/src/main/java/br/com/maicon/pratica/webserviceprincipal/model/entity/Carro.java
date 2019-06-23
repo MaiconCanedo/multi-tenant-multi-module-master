@@ -7,12 +7,13 @@ import java.io.Serializable;
 public class Carro implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false, length = 65)
     private String modelo;
-    @Column(nullable = false, length = 65)
-    private String marca;
+    @ManyToOne
+    @JoinColumn(name = "fk_marca", nullable = false)
+    private Marca marca;
     @Column(nullable = false)
     private Integer ano;
     private String motor;
@@ -36,11 +37,11 @@ public class Carro implements Serializable {
         this.modelo = modelo;
     }
 
-    public String getMarca() {
+    public Marca getMarca() {
         return marca;
     }
 
-    public void setMarca(String marca) {
+    public void setMarca(Marca marca) {
         this.marca = marca;
     }
 
@@ -65,7 +66,7 @@ public class Carro implements Serializable {
         return "Carro{" +
                 "id=" + id +
                 ", modelo='" + modelo + '\'' +
-                ", marca='" + marca + '\'' +
+                ", marca='" + marca.getDescricao() + '\'' +
                 ", ano=" + ano +
                 ", motor='" + motor + '\'' +
                 '}';

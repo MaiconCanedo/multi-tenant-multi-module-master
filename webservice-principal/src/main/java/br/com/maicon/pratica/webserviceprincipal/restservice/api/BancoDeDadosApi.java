@@ -17,6 +17,9 @@ public interface BancoDeDadosApi {
     @GET("bancodedados")
     Call<List<BancoDeDadosDTO>> findAll();
 
+    @GET("bancodedados/qualquer")
+    Call<BancoDeDadosDTO> findAny();
+
     @POST("bancodedados")
     Call<Void> save(@Body BancoDeDadosDTO bancoDeDadosDTO);
 }

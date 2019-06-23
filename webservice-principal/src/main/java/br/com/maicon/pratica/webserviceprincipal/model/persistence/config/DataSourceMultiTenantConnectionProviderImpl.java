@@ -1,6 +1,5 @@
 package br.com.maicon.pratica.webserviceprincipal.model.persistence.config;
 
-import br.com.maicon.pratica.webserviceprincipal.model.dto.BancoDeDadosDTO;
 import br.com.maicon.pratica.webserviceprincipal.restservice.BancodeDadosRestService;
 import org.hibernate.engine.jdbc.connections.spi.AbstractDataSourceBasedMultiTenantConnectionProviderImpl;
 import org.springframework.stereotype.Component;
@@ -19,8 +18,7 @@ public class DataSourceMultiTenantConnectionProviderImpl
 
     @Override
     protected DataSource selectAnyDataSource() {
-        return bancodeDadosRestService.findAll().stream()
-                .map(BancoDeDadosDTO::toDataSource).findAny().get();
+        return bancodeDadosRestService.findAny().toDataSource();
     }
 
     @Override

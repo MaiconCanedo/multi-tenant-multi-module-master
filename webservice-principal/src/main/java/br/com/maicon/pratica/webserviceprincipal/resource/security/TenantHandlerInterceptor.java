@@ -3,14 +3,13 @@ package br.com.maicon.pratica.webserviceprincipal.resource.security;
 import br.com.maicon.pratica.webserviceprincipal.model.exception.BadRequestExecption;
 import br.com.maicon.pratica.webserviceprincipal.model.persistence.config.TenantContext;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
-public class TenantHandlerInterceptor extends HandlerInterceptorAdapter {
+public class TenantHandlerInterceptor implements HandlerInterceptor {
 
     private static final String TENANT_HEADER_NAME = "DataBaseId";
 
@@ -26,10 +25,13 @@ public class TenantHandlerInterceptor extends HandlerInterceptorAdapter {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request,
-                           HttpServletResponse response,
-                           Object handler,
-                           ModelAndView modelAndView) {
+    public void afterCompletion(HttpServletRequest request,
+                                HttpServletResponse response,
+                                Object handler,
+                                Exception ex) {
         TenantContext.clear();
+        if (response.getStatus() == 200 || response.getStatus() == 201) {
+            System.out.println("Sucesso!!");
+        }
     }
 }

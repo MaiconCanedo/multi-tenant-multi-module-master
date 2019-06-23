@@ -32,6 +32,19 @@ public class CarroResource {
         }
     }
 
+    @GetMapping("spec")
+    public ResponseEntity<List<Carro>> findBy(@RequestBody Carro carro) {
+        return ResponseEntity.ok(carroService.findByModeloAndAno(carro));
+    }
+
+    @GetMapping("all")
+    public ResponseEntity<List<Carro>> findAll() {
+        List<Carro> carros = carroService.findAll();
+        if (carros.isEmpty())
+            throw new NoContentException("Nenhum carro encontrado!");
+        return ResponseEntity.ok(carros);
+    }
+
     @GetMapping
     public ResponseEntity<List<Carro>> findAll(@RequestBody Carro carro) {
         try {

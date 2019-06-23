@@ -32,4 +32,12 @@ public class BancodeDadosRestService {
             throw new BadRequestExecption(e.getMessage());
         }
     }
+
+    public BancoDeDadosDTO findAny() {
+        try {
+            return bancoDeDadosApi.findAny().execute().body();
+        } catch (IOException e) {
+            throw new BadRequestExecption(e.getMessage());
+        }
+    }
 }
